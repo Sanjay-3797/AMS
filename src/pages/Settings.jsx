@@ -6,32 +6,32 @@ const Settings = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchAllChats = async () => {
-      try {
-        const response = await fetch(`${DOMAIN_URL}/get_all_chats/`, {
-          method: "GET",
+  const fetchAllChats = async () => {
+    try {
+      const response = await fetch(`${DOMAIN_URL}/get_all_chats/`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            credentials: "include",
-          },
-        });
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error(`Request failed with status ${response.status}`);
-        }
-
-        const result = await response.json();
-        setData(result);
-      } catch (err) {
-        setError(err.message || "Something went wrong");
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        console.log(`Request failed with status ${response.status}`);
       }
-    };
 
+      const result = await response.json();
+      setData(result);
+    } catch (err) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchAllChats();
   }, []);
 

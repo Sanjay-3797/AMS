@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.png";
-import { useEffect } from "react";
-import { getAllChats } from "../api/auth";
+import { useEffect, useState } from "react";
+import { getAllChatIds } from "../api/auth";
 
 const menuItems = [
   {
@@ -24,38 +24,21 @@ const menuItems = [
         <path d="M9 11h6" />
       </svg>
     ),
-  },
-  {
-    label: "Settings",
-    path: "/settings",
-    tooltip: "Settings",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-        strokeWidth="2"
-        fill="none"
-        stroke="currentColor"
-        className="my-1.5 inline-block size-4"
-      >
-        <path d="M12 15.5a3.5 3.5 0 1 0 0-7a3.5 3.5 0 0 0 0 7z" />
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33a1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c0 .66.39 1.26 1 1.51H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-      </svg>
-    ),
-  },
+  }
 ];
 
+
 const Sidebar = () => {
+  const [chats, setChats] = useState([]);
 
   useEffect(() => {
     const loadChats = async () => {
       try {
-        const data = await getAllChats();
-        console.log(data);
+        const data = await getAllChatIds();
+
+        setChats(data);
       } catch (err) {
-        alert(err.message);
+        console.log(err.message);
       }
     };
 
@@ -73,6 +56,7 @@ const Sidebar = () => {
         {/* Sidebar content here */}
         <ul className="menu w-full grow">
           {/* List item */}
+
           <Link to="/" className="pl-2 pb-1 w-full">
             <img src={logo} alt="Shoes" className="h-6" />
           </Link>
@@ -88,10 +72,23 @@ const Sidebar = () => {
               </Link>
             </li>
           ))}
-          <li className="flex align-bottom mt-auto w-full">
+
+          {chats.map((id) => (
+            <li key={id}>
+              <Link
+                to={`/chat/${id}`}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Chat"
+              >
+                <span className="is-drawer-close:hidden truncate">{id}</span>
+              </Link>
+            </li>
+          ))}
+
+          <li className="flex sticky bottom-0 bg-base-200 align-bottom mt-auto w-full">
             <br />
             <Link
-              to="/account"
+              to="/login"
               className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
               data-tip="Account"
             >

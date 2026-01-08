@@ -14,13 +14,13 @@ export async function loginUser(username, password) {
   });
 
   if (!response.ok) {
-    throw new Error("Invalid credentials");
+    console.log("Invalid credentials");
   }
 
   return response.json();
 }
 
-export async function getAllChats() {
+export async function getAllChatIds() {
   const response = await fetch(`${DOMAIN_URL}/get_all_chats`, {
     method: "GET",
     credentials: "include",
@@ -31,8 +31,28 @@ export async function getAllChats() {
   });
 
   if (!response.ok) {
-    throw new Error("Invalid credentials");
+    console.log("Invalid credentials");
   }
 
   return response.json();
 }
+
+export async function fetchChatsWithId(chatId) {
+  const response = await fetch(`${DOMAIN_URL}/get_chat/${chatId}/`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      credentials: "include",
+    },
+  });
+
+  if (!response.ok) {
+    console.log(`Request failed with status ${response.status}`);
+  }
+
+  return response.json();
+}
+
+

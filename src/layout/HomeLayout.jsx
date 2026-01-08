@@ -6,7 +6,12 @@ import SideBar from "./SideBar";
 export default function HomeLayout() {
   return (
     <div className="drawer lg:drawer-open h-screen">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+      <input
+        id="my-drawer-4"
+        type="checkbox"
+        className="drawer-toggle"
+        defaultChecked
+      />
 
       <div className="drawer-content flex flex-col h-screen">
         <div className="sticky top-0 z-20">

@@ -22,7 +22,7 @@ export default function Login() {
       login(data);
       navigate("/", { replace: true });
     } catch (err) {
-      alert(err.message);
+      console.log(err.message);
     } finally {
       setLoading(false);
     }
