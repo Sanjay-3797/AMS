@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
+  
+
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="card bg-neutral text-neutral-content w-96">

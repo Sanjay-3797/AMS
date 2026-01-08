@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.png";
+import { useEffect } from "react";
+import { getAllChats } from "../api/auth";
 
 const menuItems = [
   {
@@ -46,6 +48,20 @@ const menuItems = [
 ];
 
 const Sidebar = () => {
+
+  useEffect(() => {
+    const loadChats = async () => {
+      try {
+        const data = await getAllChats();
+        console.log(data);
+      } catch (err) {
+        alert(err.message);
+      }
+    };
+
+    loadChats();
+  }, []);
+
   return (
     <div className="drawer-side is-drawer-close:overflow-visible">
       <label

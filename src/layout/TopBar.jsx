@@ -1,7 +1,7 @@
 
 const TopBar = () => {
   return (
-    <nav className="navbar max-h-5 w-full bg-base-300 sticky top-0 z-10">
+    <nav className="navbar w-full bg-base-300 ">
       {/* Left */}
       <div className="navbar-start">
         <label

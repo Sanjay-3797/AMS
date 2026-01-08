@@ -4,8 +4,8 @@ import { loginUser } from "../api/auth";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("Kalai");
+  const [password, setPassword] = useState("Kalai@143");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();

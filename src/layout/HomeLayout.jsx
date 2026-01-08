@@ -1,23 +1,24 @@
 import { Outlet } from "react-router-dom";
 
 import TopBar from "./TopBar";
-import Sidebar from "./Sidebar";
+import SideBar from "./SideBar";
 
 export default function HomeLayout() {
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open h-screen">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Topbar */}
-        <TopBar />
 
-        {/* Page content */}
-        <div className="p-4 h-11/12">
+      <div className="drawer-content flex flex-col h-screen">
+        <div className="sticky top-0 z-20">
+          <TopBar />
+        </div>
+
+        <div className="flex-1 overflow-hidden">
           <Outlet />
         </div>
       </div>
 
-      <Sidebar />
+      <SideBar />
     </div>
   );
 }
