@@ -1,6 +1,6 @@
 import { DOMAIN_URL } from "../api/config";
 export async function loginUser(username, password) {
-  const response = await fetch(`${DOMAIN_URL}/login/`, {
+  const response = await fetch(`${DOMAIN_URL}/login`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -38,13 +38,12 @@ export async function getAllChatIds() {
 }
 
 export async function fetchChatsWithId(chatId) {
-  const response = await fetch(`${DOMAIN_URL}/get_chat/${chatId}/`, {
+  const response = await fetch(`${DOMAIN_URL}/get_chat/${chatId}`, {
     method: "GET",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      credentials: "include",
     },
   });
 
@@ -55,4 +54,24 @@ export async function fetchChatsWithId(chatId) {
   return response.json();
 }
 
+export async function fetchQuery(query, chatId) {
+  const response = await fetch(`${DOMAIN_URL}/query`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      user_question: query,
+      chat_id: chatId,
+    }),
+  });
+
+  if (!response.ok) {
+    console.log(`Request failed with status ${response.status}`);
+  }
+
+  return response.json();
+}
 

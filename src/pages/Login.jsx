@@ -4,8 +4,8 @@ import { loginUser } from "../api/auth";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Login() {
-  const [username, setUsername] = useState("Kalai");
-  const [password, setPassword] = useState("Kalai@143");
+  const [username, setUsername] = useState("Airdit");
+  const [password, setPassword] = useState("Airdit@123");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
