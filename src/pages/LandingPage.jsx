@@ -1,7 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+import { newChatForId } from "../api/ClientAPI";
+import { useState } from "react";
 
 const LandingPage = () => {
+  const [chats, setChats] = useState([]);
+  const navigate = useNavigate();
+
+  const handleNewChat = async () => {
+    try {
+      const { success } = await newChatForId();
+      if (!success.chat_id) return;
+      setChats((prev) => [success.chat_id, ...prev]);
+      navigate(`/chat/${success.chat_id}`);
+    } catch (err) {
+      console.error(err?.message || err);
+    }
+  };
 
   return (
     <div className="w-full h-full flex justify-center items-center">
@@ -12,9 +26,10 @@ const LandingPage = () => {
             Select an existing ticket or click New Ticket to start a new
             conversation...
           </p>
-          <Link to="/new-chat" className="card-actions justify-end">
-            <button className="btn btn-primary">Get Started</button>
-          </Link>
+
+          <button className="btn btn-primary" onClick={handleNewChat}>
+            Get Started
+          </button>
         </div>
       </div>
     </div>

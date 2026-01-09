@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { marked } from "marked";
 import { fetchChatsWithId, fetchQuery } from "../api/ClientAPI";
 
@@ -10,6 +10,9 @@ export default function Chat() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const textareaRef = useRef(null);
+  const bottomRef = useRef(null);
+
 
   const onClickSend = async () => {
     if (!query.trim()) return;
@@ -26,6 +29,10 @@ export default function Chat() {
         status: "pending",
       },
     ]);
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
 
     setQuery("");
 
@@ -61,6 +68,7 @@ export default function Chat() {
       );
     }
   };
+
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -111,7 +119,7 @@ export default function Chat() {
     <div className="flex flex-col h-screen bg-base-100">
       {/* CHAT LIST */}
       <div className="flex-1 overflow-y-auto px-4 py-4 pb-32">
-        {chats.map((chat) => (
+        {chats?.map((chat) => (
           <div key={chat.id} className="mb-4 space-y-2">
             {/* USER MESSAGE */}
             <div className="chat chat-end">
@@ -134,6 +142,8 @@ export default function Chat() {
             </div>
           </div>
         ))}
+
+        <div ref={bottomRef} />
       </div>
 
       {/* INPUT */}
@@ -143,7 +153,7 @@ export default function Chat() {
           {/* Add Doc / Attach button */}
           <button
             type="button"
-            className="btn btn-ghost rounded-md hover:bg-base-300"
+            className="btn btn-ghost rounded-4xl hover:bg-base-300"
             title="Attach document"
           >
             <svg
@@ -163,16 +173,21 @@ export default function Chat() {
           {/* Textarea */}
           <textarea
             placeholder="Ask anything..."
+            ref={textareaRef}
             rows={1}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              e.target.style.height = "auto";
+              e.target.style.height = `${e.target.scrollHeight}px`;
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
                 onClickSend();
               }
             }}
-            className="flex-1 resize-none bg-transparent outline-none leading-6 px-2 py-2 overflow-y-auto"
+            className="flex-1 resize-none bg-transparent outline-none leading-6 px-2 py-2 overflow-y-auto max-h-48"
           />
 
           {/* Send button */}

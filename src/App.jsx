@@ -3,7 +3,6 @@ import Login from "./pages/Login";
 import HomeLayout from "./layout/HomeLayout";
 import Settings from "./pages/Settings";
 import ProtectedRoute from "./auth/ProtectedRoute";
-import NewChat from "./pages/NewChat";
 import LandingPage from "./pages/LandingPage";
 import Chat from "./pages/Chat";
 
@@ -22,7 +21,6 @@ export default function App() {
       >
         <Route index element={<Navigate to="landing" replace />} />
         <Route path="landing" element={<LandingPage />} />
-        <Route path="new-chat" element={<NewChat />} />
         <Route path="settings" element={<Settings />} />
 
         <Route path="chat/:chatId" element={<Chat />} />

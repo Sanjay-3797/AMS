@@ -24,9 +24,7 @@ const Sidebar = () => {
     try {
       const { success } = await newChatForId();
       if (!success.chat_id) return;
-      // append new chat id
       setChats((prev) => [success.chat_id, ...prev]);
-      // navigate to the new chat
       navigate(`/chat/${success.chat_id}`);
     } catch (err) {
       console.error(err?.message || err);
@@ -45,7 +43,7 @@ const Sidebar = () => {
         <ul className="menu w-full grow">
           {/* Logo */}
           <Link to="/" className="pl-2 pb-1 w-full">
-            <img src={logo} alt="Logo" className="h-6" />
+            <img src={logo} alt="Logo" className="h-8" />
           </Link>
 
           {/* New Chat button */}
@@ -63,13 +61,13 @@ const Sidebar = () => {
                 strokeWidth="2"
                 fill="none"
                 stroke="currentColor"
-                className="my-1.5 inline-block size-4"
+                className="my-1.5 inline-block size-6"
               >
                 <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
                 <path d="M12 8v6" />
                 <path d="M9 11h6" />
               </svg>
-              <span className="is-drawer-close:hidden">New Chat</span>
+              <span className="is-drawer-close:hidden text-lg">New Chat</span>
             </button>
           </li>
 
@@ -81,7 +79,7 @@ const Sidebar = () => {
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Chat"
               >
-                <span className="is-drawer-close:hidden truncate">{id}</span>
+                <span className="is-drawer-close:hidden truncate textarea-lg">{id}</span>
               </Link>
             </li>
           ))}
@@ -111,6 +109,24 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            <button
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              ✕
+            </button>
+          </form>
+          <h3 className="font-bold text-lg">Unauthorized</h3>
+          <p className="py-4">
+            Your session has expired. Please log in again to continue.
+          </p>
+        </div>
+      </dialog>
     </div>
   );
 };

@@ -1,4 +1,24 @@
 import { DOMAIN_URL } from "./config";
+
+function showUnauthorizedModal() {
+  const modal = document.getElementById("my_modal_3");
+  if (modal) modal.showModal();
+}
+
+async function handleResponse(response) {
+  if (response.status === 401) {
+    console.log("Unauthorized");
+    showUnauthorizedModal();
+    return null; // or throw error if you want
+  }
+
+  if (!response.ok) {
+    console.log(`Request failed with status ${response.status}`);
+  }
+
+  return response.json();
+}
+
 export async function loginUser(username, password) {
   const response = await fetch(`${DOMAIN_URL}/login`, {
     method: "POST",
@@ -7,17 +27,10 @@ export async function loginUser(username, password) {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    body: JSON.stringify({
-      username,
-      password,
-    }),
+    body: JSON.stringify({ username, password }),
   });
 
-  if (!response.ok) {
-    console.log("Invalid credentials");
-  }
-
-  return response.json();
+  return handleResponse(response);
 }
 
 export async function getAllChatIds() {
@@ -30,11 +43,7 @@ export async function getAllChatIds() {
     },
   });
 
-  if (!response.ok) {
-    console.log("Invalid credentials");
-  }
-
-  return response.json();
+  return handleResponse(response);
 }
 
 export async function fetchChatsWithId(chatId) {
@@ -47,11 +56,7 @@ export async function fetchChatsWithId(chatId) {
     },
   });
 
-  if (!response.ok) {
-    console.log(`Request failed with status ${response.status}`);
-  }
-
-  return response.json();
+  return handleResponse(response);
 }
 
 export async function fetchQuery(query, chatId) {
@@ -62,19 +67,11 @@ export async function fetchQuery(query, chatId) {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    body: JSON.stringify({
-      user_question: query,
-      chat_id: chatId,
-    }),
+    body: JSON.stringify({ user_question: query, chat_id: chatId }),
   });
 
-  if (!response.ok) {
-    console.log(`Request failed with status ${response.status}`);
-  }
-
-  return response.json();
+  return handleResponse(response);
 }
-
 
 export async function newChatForId() {
   const response = await fetch(`${DOMAIN_URL}/new_chat`, {
@@ -84,12 +81,7 @@ export async function newChatForId() {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    
   });
 
-  if (!response.ok) {
-    console.log(`Request failed with status ${response.status}`);
-  }
-
-  return response.json();
+  return handleResponse(response);
 }
