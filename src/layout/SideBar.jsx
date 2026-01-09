@@ -79,7 +79,9 @@ const Sidebar = () => {
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Chat"
               >
-                <span className="is-drawer-close:hidden truncate textarea-lg">{id}</span>
+                <span className="is-drawer-close:hidden truncate textarea-lg">
+                  {id}
+                </span>
               </Link>
             </li>
           ))}
@@ -91,19 +93,11 @@ const Sidebar = () => {
               className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
               data-tip="Account"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
-                className="my-1.5 inline-block size-4"
-              >
-                <circle cx="12" cy="8" r="4" />
-                <path d="M4 20a8 8 0 0 1 16 0" />
-              </svg>
+              <div className="avatar avatar-online avatar-placeholder">
+                <div className="bg-neutral text-neutral-content w-12 rounded-full">
+                  <span className="text-xl">TM</span>
+                </div>
+              </div>
               <span className="is-drawer-close:hidden">Account</span>
             </Link>
           </li>

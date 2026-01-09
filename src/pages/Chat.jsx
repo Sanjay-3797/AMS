@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { marked } from "marked";
 import { fetchChatsWithId, fetchQuery } from "../api/ClientAPI";
+import Attachments from "../components/Attachments";
 
 export default function Chat() {
   const { chatId } = useParams();
@@ -12,7 +13,7 @@ export default function Chat() {
   const [query, setQuery] = useState("");
   const textareaRef = useRef(null);
   const bottomRef = useRef(null);
-
+  const [attachment, setAttachment] = useState(null);
 
   const onClickSend = async () => {
     if (!query.trim()) return;
@@ -35,6 +36,7 @@ export default function Chat() {
     }
 
     setQuery("");
+    setAttachment(null);
 
     try {
       const { success } = await fetchQuery(userQuery, chatId);
@@ -68,7 +70,6 @@ export default function Chat() {
       );
     }
   };
-
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -151,24 +152,24 @@ export default function Chat() {
         {/* Input wrapper */}
         <div className="relative flex items-end gap-2 bg-base-200 rounded-2xl px-3 py-2">
           {/* Add Doc / Attach button */}
-          <button
-            type="button"
-            className="btn btn-ghost rounded-4xl hover:bg-base-300"
-            title="Attach document"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="size-5"
-            >
-              <path d="M21.44 11.05l-8.49 8.49a6 6 0 0 1-8.49-8.49l8.49-8.49a4 4 0 0 1 5.66 5.66l-8.49 8.49a2 2 0 0 1-2.83-2.83l7.78-7.78" />
-            </svg>
-          </button>
+
+          <Attachments onSelectFile={setAttachment} />
+
+          {attachment && (
+            <div className="relative w-fit">
+              <img
+                src={attachment.preview}
+                alt="preview"
+                className="max-h-8 rounded-xl border"
+              />
+              <button
+                onClick={() => setAttachment(null)}
+                className="absolute -top-2 -right-2 btn btn-xs btn-circle "
+              >
+                ✕
+              </button>
+            </div>
+          )}
 
           {/* Textarea */}
           <textarea

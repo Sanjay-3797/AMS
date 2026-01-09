@@ -1,4 +1,4 @@
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { newChatForId } from "../api/ClientAPI";
 import { useState } from "react";
 
@@ -18,18 +18,19 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <div className="card bg-neutral text-neutral-content w-96">
-        <div className="card-body items-center text-center">
-          <h2 className="card-title">Welcome to AssistPro!</h2>
+    <div className="flex h-full items-center justify-center">
+      <div className="card bg-primary text-primary-content w-96">
+        <div className="card-body">
+          <h2 className="card-title">Welcome to Chat Bot!</h2>
           <p>
             Select an existing ticket or click New Ticket to start a new
             conversation...
           </p>
-
-          <button className="btn btn-primary" onClick={handleNewChat}>
-            Get Started
-          </button>
+          <div className="card-actions justify-end">
+            <button className="btn" onClick={handleNewChat}>
+              Get Started
+            </button>
+          </div>
         </div>
       </div>
     </div>
