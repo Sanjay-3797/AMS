@@ -1,4 +1,4 @@
-import { DOMAIN_URL } from "../api/config";
+import { DOMAIN_URL } from "./config";
 export async function loginUser(username, password) {
   const response = await fetch(`${DOMAIN_URL}/login`, {
     method: "POST",
@@ -75,3 +75,21 @@ export async function fetchQuery(query, chatId) {
   return response.json();
 }
 
+
+export async function newChatForId() {
+  const response = await fetch(`${DOMAIN_URL}/new_chat`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    
+  });
+
+  if (!response.ok) {
+    console.log(`Request failed with status ${response.status}`);
+  }
+
+  return response.json();
+}
