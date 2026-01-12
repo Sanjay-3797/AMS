@@ -4,8 +4,8 @@ import { loginUser } from "../api/ClientAPI";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Login() {
-  const [username, setUsername] = useState("Airdit");
-  const [password, setPassword] = useState("Airdit@123");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -34,10 +34,13 @@ export default function Login() {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
           <p className="py-6">
-            AssistPro is an intelligent chatbot designed to provide quick,
-            accurate, and helpful responses to user queries. It streamlines
-            support by automating conversations, improving efficiency and user
-            experience.
+            <span className="text-lg font-semibold">
+              AIRDIT AMS
+              <span className="pl-2 text-sm">(powered by airbot)</span>
+            </span>{" "}
+            is an intelligent chatbot designed to provide quick, accurate, and
+            helpful responses to user queries. It streamlines support by
+            automating conversations, improving efficiency and user experience.
           </p>
         </div>
 

@@ -28,7 +28,10 @@ const TopBar = () => {
 
       {/* Center */}
       <div className="navbar-center">
-        <span className="text-lg font-semibold">Assist Pro</span>
+        <span className="text-lg font-semibold">
+          AIRDIT AMS
+          <span className="pl-2 text-sm">(powered by airbot)</span>
+        </span>
       </div>
 
       {/* Right */}

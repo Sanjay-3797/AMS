@@ -21,7 +21,7 @@ const LandingPage = () => {
     <div className="flex h-full items-center justify-center">
       <div className="card bg-primary text-primary-content w-96">
         <div className="card-body">
-          <h2 className="card-title">Welcome to Chat Bot!</h2>
+          <h2 className="card-title">Welcome to AirBot!</h2>
           <p>
             Select an existing ticket or click New Ticket to start a new
             conversation...
