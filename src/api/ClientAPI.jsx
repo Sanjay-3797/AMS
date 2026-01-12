@@ -59,19 +59,24 @@ export async function fetchChatsWithId(chatId) {
   return handleResponse(response);
 }
 
-export async function fetchQuery(query, chatId) {
+export async function fetchQuery(text, chatId, selectedFile = null) {
+  const body = new FormData();
+  body.append("chat_id", chatId);
+  body.append("user_question", text);
+
+  if (selectedFile) {
+    body.append("file", selectedFile);
+  }
+
   const response = await fetch(`${DOMAIN_URL}/query`, {
     method: "POST",
     credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({ user_question: query, chat_id: chatId }),
+    body,
   });
 
   return handleResponse(response);
 }
+
 
 export async function newChatForId() {
   const response = await fetch(`${DOMAIN_URL}/new_chat`, {

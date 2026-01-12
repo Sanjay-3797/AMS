@@ -31,7 +31,7 @@ const Attachments = ({ onSelectFile }) => {
       <div
         tabIndex={0}
         role="button"
-        className="btn btn-ghost rounded-3xl hover:bg-base-100"
+        className="btn btn-ghost rounded-4xl pb-4"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

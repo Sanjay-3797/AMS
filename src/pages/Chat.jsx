@@ -16,7 +16,7 @@ export default function Chat() {
   const [attachment, setAttachment] = useState(null);
 
   const onClickSend = async () => {
-    if (!query.trim()) return;
+    if (!query.trim() && !attachment) return;
 
     const tempId = Date.now();
     const userQuery = query;
@@ -26,6 +26,7 @@ export default function Chat() {
       {
         id: tempId,
         question: userQuery,
+        attachment,
         answer: "",
         status: "pending",
       },
@@ -39,7 +40,8 @@ export default function Chat() {
     setAttachment(null);
 
     try {
-      const { success } = await fetchQuery(userQuery, chatId);
+      const {file} = attachment;
+      const { success } = await fetchQuery(userQuery, chatId, file);
 
       setChats((prev) =>
         prev.map((chat) =>
@@ -124,7 +126,16 @@ export default function Chat() {
           <div key={chat.id} className="mb-4 space-y-2">
             {/* USER MESSAGE */}
             <div className="chat chat-end">
-              <div className="chat-bubble">{chat.question}</div>
+              {chat.attachment && (
+                <img
+                  src={chat.attachment.preview}
+                  alt="attachment"
+                  className="rounded-lg h-20 border"
+                />
+              )}
+              {chat.question && (
+                <div className="chat-bubble">{chat.question}</div>
+              )}
             </div>
 
             {/* AI MESSAGE */}
@@ -149,53 +160,56 @@ export default function Chat() {
 
       {/* INPUT */}
       <div className="p-4 sticky bottom-0 bg-base-100">
-        {/* Input wrapper */}
-        <div className="relative flex items-end gap-2 bg-base-200 rounded-2xl px-3 py-2">
-          {/* Add Doc / Attach button */}
-
+        <div className="relative flex items-end gap-2 bg-base-200 rounded-2xl px-3 py-1">
+          {/* Attachment button */}
           <Attachments onSelectFile={setAttachment} />
 
-          {attachment && (
-            <div className="relative w-fit">
-              <img
-                src={attachment.preview}
-                alt="preview"
-                className="max-h-8 rounded-xl border"
-              />
-              <button
-                onClick={() => setAttachment(null)}
-                className="absolute -top-2 -right-2 btn btn-xs btn-circle "
-              >
-                ✕
-              </button>
-            </div>
-          )}
+          {/* Textarea container */}
+          <div className="relative flex-1">
+            {/* Image preview INSIDE textarea */}
+            {attachment && (
+              <div className="absolute left-2 top-1.5 flex items-center gap-1 z-10">
+                <img
+                  src={attachment.preview}
+                  alt="preview"
+                  className="h-10 w-10 rounded-lg border object-cover"
+                />
+                <button
+                  onClick={() => setAttachment(null)}
+                  className="btn btn-xs btn-circle absolute -top-2 -right-2"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
 
-          {/* Textarea */}
-          <textarea
-            placeholder="Ask anything..."
-            ref={textareaRef}
-            rows={1}
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              e.target.style.height = "auto";
-              e.target.style.height = `${e.target.scrollHeight}px`;
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                onClickSend();
-              }
-            }}
-            className="flex-1 resize-none bg-transparent outline-none leading-6 px-2 py-2 overflow-y-auto max-h-48"
-          />
+            {/* Textarea */}
+            <textarea
+              placeholder="Ask anything..."
+              ref={textareaRef}
+              rows={1}
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                e.target.style.height = "auto";
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  onClickSend();
+                }
+              }}
+              className={`w-full resize-none bg-transparent outline-none leading-6 px-2 py-3 overflow-y-auto max-h-48
+          ${attachment ? "pl-14" : ""}`}
+            />
+          </div>
 
           {/* Send button */}
           <button
             onClick={onClickSend}
-            disabled={!query.trim()}
-            className=" btn btn-primary rounded-4xl"
+            disabled={!query.trim() && !attachment}
+            className="btn btn-primary rounded-4xl mb-2"
             title="Send"
           >
             <svg
