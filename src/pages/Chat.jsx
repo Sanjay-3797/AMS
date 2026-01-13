@@ -79,9 +79,6 @@ export default function Chat() {
     }
   };
 
-  /* ============================
-     FETCH CHATS + WEBSOCKET
-  ============================ */
   useEffect(() => {
     const fetchChats = async () => {
       try {
@@ -113,7 +110,7 @@ export default function Chat() {
     fetchChats();
 
     function connectWebSocket() {
-      const wsUrl = "ws://127.0.0.1:8000/ws";
+      const wsUrl = WEB_SOCKET_URL;
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
@@ -165,13 +162,12 @@ export default function Chat() {
 
   if (error) {
     return (
-      <div className="p-4 text-red-600">Error fetching chats: {error}</div>
+      <div className="p-4 h-screen flex items-center justify-center text-red-600">
+        Error fetching chats: {error}
+      </div>
     );
   }
 
-  /* ============================
-     UI
-  ============================ */
   return (
     <div className="flex flex-col h-screen bg-base-100">
       {/* CHAT LIST */}
