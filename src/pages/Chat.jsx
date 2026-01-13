@@ -22,9 +22,6 @@ export default function Chat() {
 
   const [attachment, setAttachment] = useState(null);
 
-  /* ============================
-     SEND MESSAGE
-  ============================ */
   const onClickSend = async () => {
     if (!query.trim() && !attachment) return;
 
@@ -118,7 +115,6 @@ export default function Chat() {
 
     fetchChats();
 
-    /* WEBSOCKET CONNECT */
     function connectWebSocket() {
       const wsUrl = "ws://127.0.0.1:8000/ws";
       const ws = new WebSocket(wsUrl);
@@ -137,7 +133,7 @@ export default function Chat() {
             chat.id === activeTempId
               ? {
                   ...chat,
-                  answer: "... " + e.data,
+                  answer: e.data,
                   status: "webSocket",
                 }
               : chat
@@ -203,19 +199,27 @@ export default function Chat() {
             <div className="chat chat-start w-[70%]">
               <div
                 className={`chat-bubble chat-bubble-primary overflow-x-auto ${
-                  chat.status === "pending"
-                    ? "loading loading-dots loading-xl text-warning"
-                    : chat.status === "webSocket"
-                    ? "animate-pulse"
+                  chat.status === "webSocket"
+                    ? "animate-pulse flex justify-between items-center gap-2"
                     : ""
                 }`}
-                dangerouslySetInnerHTML={{
-                  __html:
-                    chat.status === "pending"
-                      ? ""
-                      : marked.parse(chat.answer || ""),
-                }}
-              />
+              >
+                <span
+                  className={`${
+                    chat.status === "webSocket" || chat.status === "pending"
+                      ? "loading loading-dots loading-xl "
+                      : ""
+                  }`}
+                />
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      chat.status === "pending"
+                        ? ""
+                        : marked.parse(chat.answer || ""),
+                  }}
+                />
+              </div>
             </div>
           </div>
         ))}

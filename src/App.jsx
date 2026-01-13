@@ -25,6 +25,7 @@ export default function App() {
 
         <Route path="chat/:chatId" element={<Chat />} />
       </Route>
+      <Route path="*" element={<Navigate to="/landing" replace />} />
     </Routes>
   );
 }

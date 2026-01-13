@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/Logo.png";
 import { useEffect, useState, useCallback } from "react";
 import { getAllChatIds, newChatForId } from "../api/ClientAPI";
+import Dropdown from "../components/Dropdown";
 
 const Sidebar = () => {
   const [chats, setChats] = useState([]);
@@ -87,19 +88,8 @@ const Sidebar = () => {
           ))}
 
           {/* Account */}
-          <li className="mt-auto sticky bottom-0 bg-base-200">
-            <Link
-              to="/login"
-              className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-              data-tip="Account"
-            >
-              <div className="avatar avatar-online avatar-placeholder">
-                <div className="bg-neutral text-neutral-content w-12 rounded-full">
-                  <span className="text-xl">TM</span>
-                </div>
-              </div>
-              <span className="is-drawer-close:hidden">Account</span>
-            </Link>
+          <li className="mt-auto sticky bottom-0 is-drawer-close:mr-2">
+            <Dropdown />
           </li>
         </ul>
       </div>

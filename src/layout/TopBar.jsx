@@ -1,10 +1,28 @@
+import { useEffect, useState } from "react";
 
 const TopBar = () => {
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setChecked(true);
+      document.getElementById("root").setAttribute("data-theme", "dark");
+    }
+  }, []);
+
+  const handleToggle = (e) => {
+    const theme = e.target.checked ? "dark" : "light";
+    setChecked(e.target.checked);
+    document.getElementById("root").setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  };
+
   return (
     <nav className="navbar w-full bg-base-200 ">
       {/* Left */}
       <div className="navbar-start">
-        <label
+        {/* <label
           htmlFor="my-drawer-4"
           aria-label="open sidebar"
           className="btn btn-square btn-ghost"
@@ -23,7 +41,7 @@ const TopBar = () => {
             <path d="M9 4v16"></path>
             <path d="M14 10l2 2l-2 2"></path>
           </svg>
-        </label>
+        </label> */}
       </div>
 
       {/* Center */}
@@ -39,8 +57,9 @@ const TopBar = () => {
         <label className="toggle text-base-content">
           <input
             type="checkbox"
-            value="synthwave"
             className="theme-controller"
+            checked={checked}
+            onChange={handleToggle}
           />
 
           <svg

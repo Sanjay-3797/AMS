@@ -4,8 +4,8 @@ import { loginUser } from "../api/ClientAPI";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("Kalai");
+  const [password, setPassword] = useState("Kalai@143");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function Login() {
     try {
       const data = await loginUser(username, password);
       // const data = {success: 'Login Success', redirect_url: '/dashboard/'}; // Mock login for demonstration
-      login(data);
+      login({ ...data, username });
       navigate("/", { replace: true });
     } catch (err) {
       console.log(err.message);
