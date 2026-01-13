@@ -3,9 +3,11 @@ import logo from "../assets/Logo.png";
 import { useEffect, useState, useCallback } from "react";
 import { getAllChatIds, newChatForId } from "../api/ClientAPI";
 import Dropdown from "../components/Dropdown";
+import { useAuth } from "../auth/AuthContext";
 
 const Sidebar = () => {
-  const [chats, setChats] = useState([]);
+  const { chats, setChats } = useAuth();
+  // const [chats, setChats] = useState([]);
   const navigate = useNavigate();
 
   const loadChats = useCallback(async () => {

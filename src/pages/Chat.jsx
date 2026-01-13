@@ -16,10 +16,7 @@ export default function Chat() {
   const textareaRef = useRef(null);
   const bottomRef = useRef(null);
   const wsRef = useRef(null);
-
-  // 🔥 IMPORTANT: temp id stored in ref (not state)
   const tempIdRef = useRef(null);
-
   const [attachment, setAttachment] = useState(null);
 
   const onClickSend = async () => {

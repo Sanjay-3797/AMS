@@ -8,9 +8,14 @@ function showUnauthorizedModal() {
 async function handleResponse(response) {
   if (response.status === 401) {
     console.log("Unauthorized");
-    showUnauthorizedModal();
     return null; // or throw error if you want
+  } 
+  if( response.status === 422) {
+    console.log("Unprocessable");
+    showUnauthorizedModal();
+    return null;
   }
+
 
   if (!response.ok) {
     console.log(`Request failed with status ${response.status}`);

@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { newChatForId } from "../api/ClientAPI";
-import { useState } from "react";
+import { useAuth } from "../auth/AuthContext";
 
 const LandingPage = () => {
-  const [chats, setChats] = useState([]);
   const navigate = useNavigate();
+  const { setChats } = useAuth();
 
   const handleNewChat = async () => {
     try {

@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+  const [chats, setChats] = useState([]);
   const [user, setUser] = useState(
     () => JSON.parse(localStorage.getItem("user")) || null
   );
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, chats, setChats }}>
       {children}
     </AuthContext.Provider>
   );
