@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api/ClientAPI";
 import { useAuth } from "../auth/AuthContext";
@@ -27,6 +27,8 @@ export default function Login() {
       setLoading(false);
     }
   };
+
+  
 
   return (
     <div className="hero bg-base-300 min-h-screen">

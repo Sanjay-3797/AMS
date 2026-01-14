@@ -10,13 +10,12 @@ async function handleResponse(response) {
     console.log("Unauthorized");
     showUnauthorizedModal();
     return null; // or throw error if you want
-  } 
-  if( response.status === 422) {
+  }
+  if (response.status === 422) {
     console.log("Unprocessable");
-    
+
     return null;
   }
-
 
   if (!response.ok) {
     console.log(`Request failed with status ${response.status}`);
@@ -26,7 +25,7 @@ async function handleResponse(response) {
 }
 
 export async function loginUser(username, password) {
-  const response = await fetch(`${DOMAIN_URL}/login`, {
+  const response = await fetch(`${DOMAIN_URL}/login/`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -39,8 +38,21 @@ export async function loginUser(username, password) {
   return handleResponse(response);
 }
 
+export async function logoutUser(username, password) {
+  const response = await fetch(`${DOMAIN_URL}/logout/`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
+  return handleResponse(response);
+}
+
 export async function getAllChatIds() {
-  const response = await fetch(`${DOMAIN_URL}/get_all_chats`, {
+  const response = await fetch(`${DOMAIN_URL}/get_all_chats/`, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -53,7 +65,7 @@ export async function getAllChatIds() {
 }
 
 export async function fetchChatsWithId(chatId) {
-  const response = await fetch(`${DOMAIN_URL}/get_chat/${chatId}`, {
+  const response = await fetch(`${DOMAIN_URL}/get_chat/${chatId}/`, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -74,7 +86,7 @@ export async function fetchQuery(text, chatId, selectedFile = null) {
     body.append("file", selectedFile);
   }
 
-  const response = await fetch(`${DOMAIN_URL}/query`, {
+  const response = await fetch(`${DOMAIN_URL}/query/`, {
     method: "POST",
     credentials: "include",
     body,
@@ -83,9 +95,8 @@ export async function fetchQuery(text, chatId, selectedFile = null) {
   return handleResponse(response);
 }
 
-
 export async function newChatForId() {
-  const response = await fetch(`${DOMAIN_URL}/new_chat`, {
+  const response = await fetch(`${DOMAIN_URL}/new_chat/`, {
     method: "POST",
     credentials: "include",
     headers: {

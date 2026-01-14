@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/Logo.png";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { getAllChatIds, newChatForId } from "../api/ClientAPI";
 import Dropdown from "../components/Dropdown";
 import { useAuth } from "../auth/AuthContext";
@@ -22,6 +22,9 @@ const Sidebar = () => {
   useEffect(() => {
     loadChats();
   }, [loadChats]);
+
+
+
 
   const handleNewChat = async () => {
     try {
@@ -111,6 +114,11 @@ const Sidebar = () => {
           <p className="py-4">
             Your session has expired. Please log in again to continue.
           </p>
+        </div>
+      </dialog>
+      <dialog id="logout_loader_modal" className="modal">
+        <div className=" text-center">
+          <span className="loading loading-spinner loading-lg"></span>
         </div>
       </dialog>
     </div>
