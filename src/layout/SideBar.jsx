@@ -7,7 +7,6 @@ import { useAuth } from "../auth/AuthContext";
 
 const Sidebar = () => {
   const { chats, setChats } = useAuth();
-  // const [chats, setChats] = useState([]);
   const navigate = useNavigate();
 
   const loadChats = useCallback(async () => {
@@ -22,9 +21,6 @@ const Sidebar = () => {
   useEffect(() => {
     loadChats();
   }, [loadChats]);
-
-
-
 
   const handleNewChat = async () => {
     try {
